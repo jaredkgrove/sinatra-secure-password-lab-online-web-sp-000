@@ -17,7 +17,15 @@ class ApplicationController < Sinatra::Base
   end
 
   post "/signup" do
-    #your code here
+    @user = User.find(:username => params[:username])
+    if @user && @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      erb :login
+    else
+      erb :failure
+    end
+
+    end
 
   end
 
